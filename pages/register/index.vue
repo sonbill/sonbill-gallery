@@ -6,7 +6,7 @@ const registerForm = ref({
   name: "",
   email: "",
   password: "",
-  confirmPassword: "",
+  confirm_password: "",
 });
 
 // data.value = await axios.post("https:///localhost:8000/api/register");
@@ -66,7 +66,7 @@ const register = async () => {
               class="border p-3 rounded"
             />
             <input
-              v-model="registerForm.confirmPassword"
+              v-model="registerForm.confirm_password"
               type="password"
               placeholder="Confirm Password"
               class="border p-3 rounded"

@@ -55,12 +55,21 @@
 </template>
 
 <script>
+import axios from "axios";
 import { ref } from "@nuxtjs/composition-api";
 export default {
   setup() {
     const loginForm = ref({ email: "", password: "" });
-    const login = () => {
-      console.log(loginForm);
+    const login = async () => {
+      const data = await axios
+        .post("/api/login", loginForm)
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          return err.response.data;
+        });
+      return { data };
     };
     return { loginForm, login };
   },
