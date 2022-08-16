@@ -36,7 +36,7 @@
               text-sm text-blue
               float-right
             "
-            href="#"
+            to="#"
           >
             Forgot Password?
           </NuxtLink>

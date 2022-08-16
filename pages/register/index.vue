@@ -1,3 +1,43 @@
+<script setup>
+import { ref, useAsync, useContext } from "@nuxtjs/composition-api";
+import axios from "axios";
+
+const registerForm = ref({
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+
+// data.value = await axios.post("https:///localhost:8000/api/register");
+
+// const register = async () => {
+//   const data = ref(null);
+//   data = await $axios.$post("https:///localhost:8000/api/register");
+//   return { data };
+// };
+// const register = async () => {
+//   const { $http } = useContext();
+//   const data = useAsync(() =>
+//     $http.$post("https:///localhost:8000/api/register")
+//   );
+//   return { data };
+// };
+
+const register = async () => {
+  const data = await axios
+    .post("/api/register", registerForm)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err.response.data;
+    });
+  return { data };
+};
+</script>
+
+
 <template>
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-full md:w-1/2">
@@ -27,6 +67,7 @@
             />
             <input
               v-model="registerForm.confirmPassword"
+              type="password"
               placeholder="Confirm Password"
               class="border p-3 rounded"
             />
@@ -44,33 +85,11 @@
       <div class="text-center">
         <p class="text-grey-dark text-sm">
           Have an account?
-          <NuxtLink to="login" class="hover:underline font-bold">Login</NuxtLink
+          <NuxtLink to="/login" class="hover:underline font-bold"
+            >Login</NuxtLink
           >.
         </p>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-import { ref } from "@nuxtjs/composition-api";
-
-export default {
-  setup() {
-    const registerForm = ref({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-
-    const register = () => {
-      console.log(registerForm);
-    };
-    return {
-      registerForm,
-      register,
-    };
-  },
-};
-</script>
