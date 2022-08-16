@@ -7,24 +7,34 @@
       <div
         class="space-y-5 p-8 border-t-12 bg-white mb-6 rounded-lg md:shadow-lg"
       >
-        <form>
+        <form @submit.prevent="register">
           <div class="flex flex-col space-y-3 mb-5">
-            <input placeholder=" Name" class="border p-3 rounded" />
-            <input placeholder=" Email" class="border p-3 rounded" />
-            <input placeholder=" Password" class="border p-3 rounded" />
-            <input placeholder=" Confirm Password" class="border p-3 rounded" />
-          </div>
-          <div>
-            <input type="checkbox" name="checkbox1" value="Bike" />
-            <label for="checkbox1">
-              I agree to
-              <a href="#" class="hover:underline">Terms of Use</a> and
-              <a href="#" class="hover:underline">Privacy Policy</a></label
-            ><br />
+            <input
+              v-model="registerForm.name"
+              placeholder="Name"
+              class="border p-3 rounded"
+            />
+            <input
+              v-model="registerForm.email"
+              placeholder="Email"
+              class="border p-3 rounded"
+            />
+            <input
+              v-model="registerForm.password"
+              placeholder="Password"
+              type="password"
+              class="border p-3 rounded"
+            />
+            <input
+              v-model="registerForm.confirmPassword"
+              placeholder="Confirm Password"
+              class="border p-3 rounded"
+            />
           </div>
         </form>
         <div>
           <button
+            @click="register()"
             class="text-white w-full bg-black font-bold py-2 px-4 rounded"
           >
             Register
@@ -46,6 +56,21 @@
 import { ref } from "@nuxtjs/composition-api";
 
 export default {
-  setup() {},
+  setup() {
+    const registerForm = ref({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+
+    const register = () => {
+      console.log(registerForm);
+    };
+    return {
+      registerForm,
+      register,
+    };
+  },
 };
 </script>

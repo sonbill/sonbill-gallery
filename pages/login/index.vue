@@ -5,19 +5,30 @@
         Login
       </h1>
       <div class="space-y-5 p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg">
-        <form>
+        <form @submit.prevent="login">
           <div class="flex flex-col space-y-5">
-            <input placeholder="Email" class="border p-3 rounded" />
-            <input placeholder="Password" class="border p-3 rounded" />
+            <input
+              v-model="loginForm.email"
+              type="email"
+              placeholder="Email"
+              class="border p-3 rounded"
+            />
+            <input
+              v-model="loginForm.password"
+              type="password"
+              placeholder="Password"
+              class="border p-3 rounded"
+            />
           </div>
         </form>
         <div class="flex flex-col items-center space-y-4">
           <button
+            @click="login()"
             class="text-white w-full bg-black font-bold py-2 px-4 rounded"
           >
             Login
           </button>
-          <a
+          <NuxtLink
             class="
               hover:underline
               inline-block
@@ -28,13 +39,15 @@
             href="#"
           >
             Forgot Password?
-          </a>
+          </NuxtLink>
         </div>
       </div>
       <div class="text-center">
         <p class="text-grey-dark text-sm">
           Don't have an account?
-          <a href="#" class="hover:underline font-bold">Create an Account</a>.
+          <NuxtLink to="/register" class="hover:underline font-bold"
+            >Create an Account</NuxtLink
+          >.
         </p>
       </div>
     </div>
@@ -45,8 +58,11 @@
 import { ref } from "@nuxtjs/composition-api";
 export default {
   setup() {
-    
-
+    const loginForm = ref({ email: "", password: "" });
+    const login = () => {
+      console.log(loginForm);
+    };
+    return { loginForm, login };
   },
 };
 </script>
