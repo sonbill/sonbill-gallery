@@ -62,7 +62,7 @@ export default {
     const loginForm = ref({ email: "", password: "" });
     const login = async () => {
       const data = await axios
-        .post("/api/login", loginForm)
+        .post("http://127.0.0.1:8000/api/login", loginForm.value)
         .then((response) => {
           return response.data;
         })
