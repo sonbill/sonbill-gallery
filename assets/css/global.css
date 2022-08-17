@@ -2,3 +2,8 @@ html,
 body {
   font-family: Helvetica;
 }
+
+a.nuxt-link-exact-active {
+  color: white;
+  background-color: black;
+}

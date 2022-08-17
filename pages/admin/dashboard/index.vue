@@ -1,44 +1,39 @@
 <template>
   <div>
     <h1>DASHBOARD PAGE</h1>
-    <div v-for="item in data" :key="item.id">
-      <p>{{ item.name }}</p>
-    </div>
-    <button @click="getUser()">Click</button>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/axios";
+
 import { ref } from "@nuxtjs/composition-api";
 
 export default {
   setup() {
     let data = ref([]);
     const getUser = async () => {
-      const accessTokenObj = JSON.parse(localStorage.getItem("access_token"));
+      const accessToken = JSON.parse(localStorage.getItem("access_token"));
 
       // request.headers.common["Authorization"] = `Bearer ${token}`;
+
       data = await axios
-        .get("http://127.0.0.1:8000/api/user", {
-          headers: { Authorization: `Bearer ${accessTokenObj}` },
+        .get("user", {
+          headers: { Authorization: `Bearer ${accessToken}` },
         })
         .then((response) => {
-          console.log(response);
-          response.forEach((res) => {
-            data.push(res);
-          });
-          return data;
+          console.log(response.data);
+          return response.data;
         })
         .catch((err) => {
           console.log(err.response.data.message.email);
           return err.response.data.message;
         });
-
       return { data };
     };
+    getUser();
 
-    return { getUser, data };
+    return { data };
   },
 };
 </script>
