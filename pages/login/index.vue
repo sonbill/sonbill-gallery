@@ -11,19 +11,27 @@
               v-model="loginForm.email"
               type="email"
               placeholder="Email"
-              class="border p-3 rounded"
+              class="border p-3 rounded focus:outline-none"
             />
-            <input
-              v-model="loginForm.password"
-              type="password"
-              placeholder="Password"
-              class="border p-3 rounded"
-            />
+            <div class="w-full flex items-center border p-3 rounded">
+              <input
+                v-model="loginForm.password"
+                :type="showPassword ? 'text' : 'password'"
+                placeholder="Password"
+                class="grow focus:outline-none"
+              />
+              <button @click="togglePassword" class="flex items-center">
+                <span v-if="showPassword" class="material-icons">
+                  visibility
+                </span>
+                <span v-else class="material-icons"> visibility_off </span>
+              </button>
+            </div>
           </div>
         </form>
         <div class="flex flex-col items-center space-y-4">
           <button
-            @click="login()"
+            @click="login"
             class="text-white w-full bg-black font-bold py-2 px-4 rounded"
           >
             Login
@@ -60,6 +68,14 @@ import { ref } from "@nuxtjs/composition-api";
 export default {
   setup() {
     const loginForm = ref({ email: "", password: "" });
+
+    // SHOWPASSWORD
+    const showPassword = ref(false);
+    const togglePassword = () => {
+      showPassword.value = !showPassword.value;
+    };
+
+    // LOGIN FUNCTION
     const login = async () => {
       const data = await axios
         .post("http://127.0.0.1:8000/api/login", loginForm.value)
@@ -67,14 +83,13 @@ export default {
           return response.data;
         })
         .catch((err) => {
-          return err.response.data;
+          console.log(err.response.data.message.email);
+          return err.response.data.message;
         });
       return { data };
     };
-    return { loginForm, login };
+    return { loginForm, login, togglePassword, showPassword };
   },
 };
 </script>
 
-<style>
-</style>
