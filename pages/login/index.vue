@@ -63,7 +63,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/axios";
+
 import { ref, useRouter } from "@nuxtjs/composition-api";
 export default {
   setup() {
@@ -80,14 +81,16 @@ export default {
     // LOGIN FUNCTION
     const login = async () => {
       const data = await axios
-        .post("http://127.0.0.1:8000/api/login", loginForm.value)
+        .post("login", loginForm.value)
         .then((response) => {
-          console.log(response.data);
-          localStorage.setItem(
-            "access_token",
-            JSON.stringify(response.data.access_token)
-          );
-          router.push("/admin/dashboard");
+          if (response.data.access_token) {
+            console.log(response.data.access_token);
+            localStorage.setItem(
+              "access_token",
+              JSON.stringify(response.data.access_token)
+            );
+            router.push("/admin/dashboard");
+          }
           return response.data;
         })
         .catch((err) => {
