@@ -1,19 +1,14 @@
 <template>
-  <div class="text-white bg-red-600">
-    {{ message }}
+  <div class="w-[20px] h-[20px]">
+    <div v-for="message in messages" :key="message">
+      <p>Thong bao {{ message }}</p>
+    </div>
   </div>
 </template>
-
-<style>
-.notification {
-  padding: 11px;
-  margin: 10px 0px;
-}
-</style>
 
 <script>
 export default {
   name: "Notification",
-  props: ["message"],
+  props: ["messages"],
 };
 </script>

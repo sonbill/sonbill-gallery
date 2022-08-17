@@ -1,6 +1,9 @@
 <template>
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-full md:w-1/2">
+      <div class="w-[20px] h-[20px]">
+        <Notification :messages="messages" />
+      </div>
       <h1 class="font-bold text-[36px] mb-6 text-center text-black pt-24">
         Register
       </h1>
@@ -74,53 +77,75 @@
 </template>
 
 
-<script setup>
-import { ref, useAsync, useContext } from "@nuxtjs/composition-api";
+<script>
+import { ref, computed } from "@nuxtjs/composition-api";
 import axios from "axios";
 
-const showPassword = ref(false);
-const PasswordConfirmation = ref(false);
+export default {
+  // components: { Notification },
+  setup() {
+    const showPassword = ref(false);
+    const PasswordConfirmation = ref(false);
 
-// SHOW PASSWORD
-const togglePassword = () => {
-  showPassword.value = !showPassword.value;
-};
-// SHOW PASSWORD CONFIRMATION
-const togglePasswordConfirmation = () => {
-  PasswordConfirmation.value = !PasswordConfirmation.value;
-};
+    let messages = [];
 
-const registerForm = ref({
-  name: "",
-  email: "",
-  password: "",
-  password_confirmation: "",
-});
+    // SHOW PASSWORD
+    const togglePassword = () => {
+      showPassword.value = !showPassword.value;
+    };
+    // SHOW PASSWORD CONFIRMATION
+    const togglePasswordConfirmation = () => {
+      PasswordConfirmation.value = !PasswordConfirmation.value;
+    };
 
-// data.value = await axios.post("https:///localhost:8000/api/register");
-
-// const register = async () => {
-//   const data = ref(null);
-//   data = await $axios.$post("https:///localhost:8000/api/register");
-//   return { data };
-// };
-// const register = async () => {
-//   const { $http } = useContext();
-//   const data = useAsync(() =>
-//     $http.$post("https:///localhost:8000/api/register")
-//   );
-//   return { data };
-// };
-// REGISTER FUNCTION
-const register = async () => {
-  const data = await axios
-    .post("http://127.0.0.1:8000/api/register", registerForm.value)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return err.response.data.message;
+    const registerForm = ref({
+      name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
     });
-  return { data };
+
+    // data.value = await axios.post("https:///localhost:8000/api/register");
+
+    // const register = async () => {
+    //   const data = ref(null);
+    //   data = await $axios.$post("https:///localhost:8000/api/register");
+    //   return { data };
+    // };
+    // const register = async () => {
+    //   const { $http } = useContext();
+    //   const data = useAsync(() =>
+    //     $http.$post("https:///localhost:8000/api/register")
+    //   );
+    //   return { data };
+    // };
+
+    // REGISTER FUNCTION
+    const register = async () => {
+      const data = await axios
+        .post("http://127.0.0.1:8000/api/register", registerForm.value)
+        .then((response) => {
+          console.log(response);
+          return response.data;
+        })
+        .catch((err) => {
+          let messages = err.response.data.message;
+          console.log(err.response.data.message);
+          return messages;
+        });
+      // console.log(data);
+      return { data, messages };
+    };
+
+    return {
+      messages,
+      register,
+      registerForm,
+      showPassword,
+      PasswordConfirmation,
+      togglePasswordConfirmation,
+      togglePassword,
+    };
+  },
 };
 </script>
