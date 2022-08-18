@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>DASHBOARD PAGE</h1>
-  </div>
+  <div><Title :title="title" /></div>
 </template>
 
 <script>
@@ -10,7 +8,11 @@ import axios from "@/axios";
 import { ref } from "@nuxtjs/composition-api";
 
 export default {
+  components: ["Title"],
   setup() {
+    // Title
+    const title = "Dashboard";
+
     let data = ref([]);
     const getUser = async () => {
       const accessToken = JSON.parse(localStorage.getItem("access_token"));
@@ -33,7 +35,7 @@ export default {
     };
     getUser();
 
-    return { data };
+    return { data, title };
   },
 };
 </script>
