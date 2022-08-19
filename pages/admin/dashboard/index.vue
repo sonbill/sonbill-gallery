@@ -8,6 +8,7 @@ import axios from "@/axios";
 import { ref } from "@nuxtjs/composition-api";
 
 export default {
+  layout: "admin",
   components: ["Title"],
   setup() {
     // Title

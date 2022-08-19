@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Nuxt />
+    <Sidebar />
+    <div class="ml-[256px] p-10 w-full">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
