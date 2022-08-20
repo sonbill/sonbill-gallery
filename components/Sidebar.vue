@@ -74,18 +74,33 @@
     <!-- USER -->
     <div class="fixed bottom-0 p-4">
       <div>Sonbill</div>
-      <button>LOGOUT</button>
+      <button @click="logout">LOGOUT</button>
       <div class="mt-5 text-sm">{{ dateTime }}</div>
     </div>
   </div>
 </template>
 
 // <script>
-import { ref } from "@nuxtjs/composition-api";
+import Cookies from "js-cookie";
+import { ref, useRouter } from "@nuxtjs/composition-api";
+import axios from "axios";
 
 export default {
   setup() {
     let dateTime = ref(null);
+    const router = useRouter();
+
+    const logout = async () => {
+      await axios.post("logout");
+      const cookie = Cookies.get("access_token");
+      if (cookie) {
+        Cookies.remove("access_token");
+      }
+      axios.defaults.headers.common["Authorization"] = "";
+
+      await router.push("/login");
+    };
+
     const currentDateTime = () => {
       const current = new Date();
       const date =
@@ -104,7 +119,7 @@ export default {
       return dateTime;
     };
     currentDateTime();
-    return { dateTime };
+    return { dateTime, logout };
   },
 };
 </script>

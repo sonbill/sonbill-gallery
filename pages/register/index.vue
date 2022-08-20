@@ -123,7 +123,7 @@ export default {
     // REGISTER FUNCTION
     const register = async () => {
       const data = await axios
-        .post("http://127.0.0.1:8000/api/register", registerForm.value)
+        .post("register", registerForm.value)
         .then((response) => {
           console.log(response);
           return response.data;

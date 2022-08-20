@@ -63,8 +63,8 @@
 </template>
 
 <script>
-import axios from "@/axios";
-
+import axios from "axios";
+import Cookies from "js-cookie";
 import { ref, useRouter } from "@nuxtjs/composition-api";
 export default {
   setup() {
@@ -84,13 +84,21 @@ export default {
         .post("login", loginForm.value)
         .then((response) => {
           if (response.data.access_token) {
-            console.log(response.data.access_token);
-            localStorage.setItem(
+            Cookies.set(
               "access_token",
-              JSON.stringify(response.data.access_token)
+              JSON.stringify(response.data.access_token),
+              { expires: 1 }
             );
             router.push("/admin/dashboard");
           }
+          // if (response.data.access_token) {
+          //   console.log(response.data.access_token);
+          //   localStorage.setItem(
+          //     "access_token",
+          //     JSON.stringify(response.data.access_token)
+          //   );
+          //   router.push("/admin/dashboard");
+          // }
           return response.data;
         })
         .catch((err) => {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Sidebar />
-    <div class="ml-[256px] p-10 w-full">
+    <div class="ml-[256px] p-10">
       <Nuxt />
     </div>
   </div>

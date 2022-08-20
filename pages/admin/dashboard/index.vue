@@ -1,26 +1,27 @@
 <template>
-  <div><Title :title="title" /></div>
+  <div>
+    <Title :title="title" />
+  </div>
 </template>
 
 <script>
-import axios from "@/axios";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 import { ref } from "@nuxtjs/composition-api";
 
 export default {
   layout: "admin",
-  components: ["Title"],
   setup() {
     // Title
     const title = "Dashboard";
 
-    let data = ref([]);
     const getUser = async () => {
-      const accessToken = JSON.parse(localStorage.getItem("access_token"));
+      const accessToken = JSON.parse(Cookies.get("access_token"));
 
       // request.headers.common["Authorization"] = `Bearer ${token}`;
 
-      data = await axios
+      const data = await axios
         .get("user", {
           headers: { Authorization: `Bearer ${accessToken}` },
         })
@@ -36,7 +37,7 @@ export default {
     };
     getUser();
 
-    return { data, title };
+    return { title };
   },
 };
 </script>
