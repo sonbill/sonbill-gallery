@@ -65,10 +65,12 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import { ref, useRouter } from "@nuxtjs/composition-api";
+import { ref, useRouter, useStore } from "@nuxtjs/composition-api";
 export default {
   setup() {
     const loginForm = ref({ email: "", password: "" });
+
+    const store = useStore();
 
     const router = useRouter();
 
@@ -97,7 +99,7 @@ export default {
           //     "access_token",
           //     JSON.stringify(response.data.access_token)
           //   );
-          //   router.push("/admin/dashboard");
+          // router.push("/admin/dashboard");
           // }
           return response.data;
         })
