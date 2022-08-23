@@ -78,16 +78,20 @@
 
 
 <script>
-import { ref, computed } from "@nuxtjs/composition-api";
+import { ref, computed, useRouter, useStore } from "@nuxtjs/composition-api";
 import axios from "axios";
 
 export default {
   // components: { Notification },
   setup() {
+    const store = useStore();
+
+    const router = useRouter();
+
     const showPassword = ref(false);
     const PasswordConfirmation = ref(false);
 
-    let messages = [];
+    // let messages = [];
 
     // SHOW PASSWORD
     const togglePassword = () => {
@@ -122,23 +126,26 @@ export default {
 
     // REGISTER FUNCTION
     const register = async () => {
-      const data = await axios
-        .post("register", registerForm.value)
-        .then((response) => {
-          console.log(response);
-          return response.data;
-        })
-        .catch((err) => {
-          let messages = err.response.data.message;
-          console.log(err.response.data.message);
-          return messages;
-        });
-      // console.log(data);
-      return { data, messages };
+      store.dispatch("auth/authenticateUser", registerForm.value);
+      router.push("/login");
+
+      // const data = await axios
+      //   .post("register", registerForm.value)
+      //   .then((response) => {
+      //     console.log(response);
+      //     return response.data;
+      //   })
+      //   .catch((err) => {
+      //     let messages = err.response.data.message;
+      //     console.log(err.response.data.message);
+      //     return messages;
+      //   });
+      // // console.log(data);
+      // return { data, messages };
     };
 
     return {
-      messages,
+      // messages,
       register,
       registerForm,
       showPassword,

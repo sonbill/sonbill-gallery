@@ -1,6 +1,7 @@
 <template>
   <div>
     <Title :title="title" />
+    <p>{{ localToken }}</p>
   </div>
 </template>
 
@@ -8,14 +9,18 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import { ref } from "@nuxtjs/composition-api";
+import { ref, useStore, computed } from "@nuxtjs/composition-api";
 
 export default {
   layout: "admin",
-  middleware: "auth",
+  // middleware: "auth",
   setup() {
     // Title
     const title = "Dashboard";
+
+    const store = useStore();
+
+    const localToken = computed(() => store.state.auth.token);
 
     const getUser = async () => {
       const accessToken = JSON.parse(Cookies.get("access_token"));
@@ -38,7 +43,7 @@ export default {
     };
     getUser();
 
-    return { title };
+    return { title, localToken };
   },
 };
 </script>

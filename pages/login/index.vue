@@ -1,6 +1,7 @@
 <template>
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-full md:w-1/2">
+      <!-- <p>{{ isAuth }}</p> -->
       <h1 class="font-bold text-[36px] mb-6 text-center text-black pt-24">
         Login
       </h1>
@@ -65,10 +66,16 @@
 <script>
 import axios from "axios";
 import Cookies from "js-cookie";
-import { ref, useRouter, useStore } from "@nuxtjs/composition-api";
+import {
+  ref,
+  computed,
+  reactive,
+  useRouter,
+  useStore,
+} from "@nuxtjs/composition-api";
 export default {
   setup() {
-    const loginForm = ref({ email: "", password: "" });
+    const loginForm = ref({ email: "", password: "", isLogin: true });
 
     const store = useStore();
 
@@ -82,33 +89,40 @@ export default {
 
     // LOGIN FUNCTION
     const login = async () => {
-      const data = await axios
-        .post("login", loginForm.value)
-        .then((response) => {
-          if (response.data.access_token) {
-            Cookies.set(
-              "access_token",
-              JSON.stringify(response.data.access_token),
-              { expires: 1 }
-            );
-            router.push("/admin/dashboard");
-          }
-          // if (response.data.access_token) {
-          //   console.log(response.data.access_token);
-          //   localStorage.setItem(
-          //     "access_token",
-          //     JSON.stringify(response.data.access_token)
-          //   );
-          // router.push("/admin/dashboard");
-          // }
-          return response.data;
-        })
-        .catch((err) => {
-          console.log(err.response.data.message.email);
-          return err.response.data.message;
-        });
-      return { data };
+      store.dispatch("auth/authenticateUser", loginForm.value);
+      router.push("/admin/dashboard");
+
+      // const data = await axios
+      //   .post("login", loginForm.value)
+      //   .then((response) => {
+      //     console.log(response);
+      //     if (response.data.access_token) {
+      //       Cookies.set(
+      //         "access_token",
+      //         JSON.stringify(response.data.access_token),
+      //         { expires: 1 }
+      //       );
+
+      //       router.push("/admin/dashboard");
+      //     }
+      //     // if (response.data.access_token) {
+      //     //   console.log(response.data.access_token);
+      //     //   localStorage.setItem(
+      //     //     "access_token",
+      //     //     JSON.stringify(response.data.access_token)
+      //     //   );
+      //     // router.push("/admin/dashboard");
+      //     // }
+      //     return response;
+      //   })
+      //   .catch((err) => {
+      //     console.log(err.response.data.message.email);
+      //     return err.response.data.message;
+      //   });
+      // return { data };
     };
+    // const isAuth = computed(() => store.state.auth.auth);
+    // console.log(isAuth);
     return { loginForm, login, togglePassword, showPassword };
   },
 };
