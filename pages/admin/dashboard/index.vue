@@ -12,7 +12,7 @@ import { ref, useStore, computed } from "@nuxtjs/composition-api";
 
 export default {
   layout: "admin",
-  // middleware: "auth",
+  middleware: "auth",
   setup() {
     // Title
     const title = "Dashboard";

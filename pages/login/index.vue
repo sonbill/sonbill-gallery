@@ -73,6 +73,7 @@ import {
   useRouter,
   useStore,
 } from "@nuxtjs/composition-api";
+
 export default {
   setup() {
     const loginForm = ref({ email: "", password: "", isLogin: true });

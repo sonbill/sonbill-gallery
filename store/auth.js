@@ -5,16 +5,10 @@ import Cookies from "js-cookie";
 // const context = useContext();
 
 export const state = () => ({
-  token: ref(null),
+  token: null,
   user: null
 })
 
-
-// export const getters = {
-//   isAuthenticated(state, auth) {
-//     return state.token != null
-//   }
-// }
 
 export const mutations = {
   // setAuth(state, auth) {
@@ -32,16 +26,21 @@ export const actions = {
   // setAuth({ commit }, auth) {
   //   commit("setAuth", auth);
   // },
-  authenticateUser(context, credentials) {
+  nuxtServerInit({ dispatch }, context) {
+    return Promise.all([
+      dispatch('auth/authenticateUser', context),
+    ])
+  },
+  authenticateUser(vuexContext, credentials) {
     return new Promise((resolve, reject) => {
       // check login or register
       let authUrlApi = "login"
       if (!credentials.isLogin) {
         authUrlApi = "register"
       }
-      const data = axios.post(authUrlApi, credentials)
+      return axios.post(authUrlApi, credentials)
         .then((response) => {
-          context.commit('setToken', response.data.access_token)
+          vuexContext.commit('setToken', response.data.access_token)
           if (response.data.access_token) {
             Cookies.set(
               "access_token",
@@ -50,13 +49,10 @@ export const actions = {
             );
           }
           resolve(response)
-          return response
         }).catch((error) => {
           // console.log(err.response.data.message.email);
           reject(error)
-          return error
         });
-      return { data }
     })
   },
   getUser(context) {
@@ -68,18 +64,22 @@ export const actions = {
         .then((response) => {
           context.commit('setUser', response.data);
           resolve(response.data)
-          return response
         })
         .catch((error) => {
           reject(error)
-          console.log(err.response.data.message.email);
-          return error.response.data.message;
+          // console.log(err.response.data.message.email);
+          // return error.response.data.message;
         });
       return { data };
     })
   },
 }
 
+// export const getters = {
+//   isAuthenticated(state) {
+//     state.token != null
+//   }
+// }
 
 
 // export default {
