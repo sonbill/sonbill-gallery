@@ -89,8 +89,16 @@ export default {
 
     // LOGIN FUNCTION
     const login = async () => {
-      store.dispatch("auth/authenticateUser", loginForm.value);
-      router.push("/admin/dashboard");
+      await store
+        .dispatch("auth/authenticateUser", loginForm.value)
+        .then((response) => {
+          if (response.data) {
+            router.push("/admin/dashboard");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       // const data = await axios
       //   .post("login", loginForm.value)

@@ -1,14 +1,13 @@
 <template>
   <div>
     <Title :title="title" />
-    <p>{{ localToken }}</p>
+    <div>
+      {{ user }}
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Cookies from "js-cookie";
-
 import { ref, useStore, computed } from "@nuxtjs/composition-api";
 
 export default {
@@ -20,30 +19,41 @@ export default {
 
     const store = useStore();
 
-    const localToken = computed(() => store.state.auth.token);
+    // const data = computed(() => {
+    //   store.state.auth.user;
+    // });
+    const user = computed(() => store.state.auth.user);
+
+    // const localToken = computed(() => store.state.auth.token);
 
     const getUser = async () => {
-      const accessToken = JSON.parse(Cookies.get("access_token"));
+      await store.dispatch("auth/getUser");
+      // .then((response) => {
+      //   user.push(response.data);
+      //   console.log(user);
+      // })
+      // .catch((error) => error.message);
+
+      // const accessToken = JSON.parse(Cookies.get("access_token"));
 
       // request.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const data = await axios
-        .get("user", {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        })
-        .then((response) => {
-          console.log(response.data);
-          return response.data;
-        })
-        .catch((err) => {
-          console.log(err.response.data.message.email);
-          return err.response.data.message;
-        });
-      return { data };
+      // const data = await axios
+      //   // .get("user", {
+      //   //   headers: { Authorization: `Bearer ${accessToken}` },
+      //   // })
+      //   // .then((response) => {
+      //   //   console.log(response.data);
+      //   //   return response.data;
+      //   // })
+      //   // .catch((err) => {
+      //   //   console.log(err.response.data.message.email);
+      //   //   return err.response.data.message;
+      //   // });
     };
     getUser();
 
-    return { title, localToken };
+    return { title, user };
   },
 };
 </script>

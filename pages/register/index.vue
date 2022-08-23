@@ -2,7 +2,7 @@
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-full md:w-1/2">
       <div class="w-[20px] h-[20px]">
-        <Notification :messages="messages" />
+        <!-- <Notification :messages="messages" /> -->
       </div>
       <h1 class="font-bold text-[36px] mb-6 text-center text-black pt-24">
         Register
@@ -126,8 +126,12 @@ export default {
 
     // REGISTER FUNCTION
     const register = async () => {
-      store.dispatch("auth/authenticateUser", registerForm.value);
-      router.push("/login");
+      await store
+        .dispatch("auth/authenticateUser", registerForm.value)
+        .then((response) => {
+          console.log(response.data.message);
+          router.push("/login");
+        });
 
       // const data = await axios
       //   .post("register", registerForm.value)
