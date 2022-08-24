@@ -74,6 +74,7 @@ import {
 
 export default {
   middleware: ["guest"],
+  layout: "loginAndRegister",
   setup() {
     const loginForm = ref({ email: "", password: "", isLogin: true });
 

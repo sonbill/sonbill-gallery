@@ -84,6 +84,7 @@ import axios from "axios";
 export default {
   // components: { Notification },
   middleware: ["guest"],
+  layout: "loginAndRegister",
 
   setup() {
     const store = useStore();
