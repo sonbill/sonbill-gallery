@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 // const context = useContext();
 
 export const state = () => ({
-  token: null,
+  token: Cookies.get('access_token') || '',
   user: null
 })
 
@@ -69,24 +69,33 @@ export const actions = {
   getUser(vuexContext) {
     return new Promise((resolve, reject) => {
       const accessToken = JSON.parse(Cookies.get("access_token"));
-      axios.get("user", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-        .then((response) => {
-          vuexContext.commit('SET_USER', response.data);
-          resolve(response.data)
+      if (accessToken) {
+        axios.get("user", {
+          headers: { Authorization: `Bearer ${accessToken}` },
         })
-        .catch((error) => {
-          reject(error)
-          // console.log(err.response.data.message.email);
-          // return error.response.data.message;
-        });
+          .then((response) => {
+            vuexContext.commit('SET_USER', response.data);
+            resolve(response.data)
+          })
+          .catch((error) => {
+            reject(error)
+            // console.log(err.response.data.message.email);
+            // return error.response.data.message;
+          });
+      }
     })
   },
+
   async logoutUser({ commit }) {
+    const accessToken = JSON.parse(Cookies.get("access_token"));
+
+    axios.post("logout")
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
     commit('SET_TOKEN', '');
     commit('SET_USER', '');
     Cookies.remove('access_token')
+
     this.$router.push('/login')
   },
 }
