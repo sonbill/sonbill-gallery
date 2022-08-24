@@ -14,10 +14,10 @@ export const mutations = {
   // setAuth(state, auth) {
   //   state.auth = auth;
   // }
-  setToken(state, token) {
+  SET_TOKEN(state, token) {
     state.token = token;
   },
-  setUser(state, user) {
+  SET_USER(state, user) {
     state.user = user
   }
 };
@@ -26,11 +26,19 @@ export const actions = {
   // setAuth({ commit }, auth) {
   //   commit("setAuth", auth);
   // },
-  nuxtServerInit({ dispatch }, context) {
-    return Promise.all([
-      dispatch('auth/authenticateUser', context),
-    ])
-  },
+
+  // nuxtServerInit({ dispatch }, context) {
+  //   return Promise.all([
+  //     dispatch('auth/authenticateUser', context),
+  //   ])
+  // },
+
+  // nuxtServerInit({ commit }, { req }) {
+  //   const cookies = new Cookies(req.headers.cookie)
+  //   const token = cookies.get('token')
+  //   commit('SET_TOKEN', token);
+  // },
+
   authenticateUser(vuexContext, credentials) {
     return new Promise((resolve, reject) => {
       // check login or register
@@ -40,13 +48,14 @@ export const actions = {
       }
       return axios.post(authUrlApi, credentials)
         .then((response) => {
-          vuexContext.commit('setToken', response.data.access_token)
-          if (response.data.access_token) {
+          const token = response.data.access_token
+          if (token) {
             Cookies.set(
               "access_token",
-              JSON.stringify(response.data.access_token),
+              JSON.stringify(token),
               { expires: 1 }
             );
+            vuexContext.commit('SET_TOKEN', token)
           }
           resolve(response)
         }).catch((error) => {
@@ -55,14 +64,14 @@ export const actions = {
         });
     })
   },
-  getUser(context) {
+  getUser(vuexContext) {
     return new Promise((resolve, reject) => {
       const accessToken = JSON.parse(Cookies.get("access_token"));
-      const data = axios.get("user", {
+      axios.get("user", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
         .then((response) => {
-          context.commit('setUser', response.data);
+          vuexContext.commit('SET_USER', response.data);
           resolve(response.data)
         })
         .catch((error) => {
@@ -70,7 +79,6 @@ export const actions = {
           // console.log(err.response.data.message.email);
           // return error.response.data.message;
         });
-      return { data };
     })
   },
 }
@@ -80,6 +88,10 @@ export const actions = {
 //     state.token != null
 //   }
 // }
+
+export const getters = {
+  token: state => state.token
+}
 
 
 // export default {
