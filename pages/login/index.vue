@@ -64,8 +64,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import Cookies from "js-cookie";
 import {
   ref,
   computed,
@@ -75,6 +73,7 @@ import {
 } from "@nuxtjs/composition-api";
 
 export default {
+  middleware: ["guest"],
   setup() {
     const loginForm = ref({ email: "", password: "", isLogin: true });
 
@@ -98,7 +97,7 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
+          alert(error);
         });
 
       // const data = await axios

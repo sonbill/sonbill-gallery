@@ -82,23 +82,27 @@
 
 // <script>
 import Cookies from "js-cookie";
-import { ref, useRouter } from "@nuxtjs/composition-api";
+import { ref, useStore } from "@nuxtjs/composition-api";
 import axios from "axios";
 
 export default {
   setup() {
     let dateTime = ref(null);
-    const router = useRouter();
+    const store = useStore();
+
+    // const logout = async () => {
+    //   await axios.post("logout");
+    //   const cookie = Cookies.get("access_token");
+    //   if (cookie) {
+    //     Cookies.remove("access_token");
+    //   }
+    //   axios.defaults.headers.common["Authorization"] = "";
+
+    //   router.push("/login");
+    // };
 
     const logout = async () => {
-      await axios.post("logout");
-      const cookie = Cookies.get("access_token");
-      if (cookie) {
-        Cookies.remove("access_token");
-      }
-      axios.defaults.headers.common["Authorization"] = "";
-
-      await router.push("/login");
+      await store.dispatch("auth/logoutUser");
     };
 
     const currentDateTime = () => {

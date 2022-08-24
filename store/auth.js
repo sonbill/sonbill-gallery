@@ -1,6 +1,8 @@
-import { reactive, ref, useContext } from "@nuxtjs/composition-api";
+import { useRouter, reactive, ref, useContext } from "@nuxtjs/composition-api";
 import axios from "axios";
 import Cookies from "js-cookie";
+
+
 
 // const context = useContext();
 
@@ -39,7 +41,7 @@ export const actions = {
   //   commit('SET_TOKEN', token);
   // },
 
-  authenticateUser(vuexContext, credentials) {
+  async authenticateUser(vuexContext, credentials) {
     return new Promise((resolve, reject) => {
       // check login or register
       let authUrlApi = "login"
@@ -80,6 +82,12 @@ export const actions = {
           // return error.response.data.message;
         });
     })
+  },
+  async logoutUser({ commit }) {
+    commit('SET_TOKEN', '');
+    commit('SET_USER', '');
+    Cookies.remove('access_token')
+    this.$router.push('/login')
   },
 }
 
