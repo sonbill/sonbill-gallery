@@ -17,7 +17,9 @@
   >
     <!-- LOGO -->
     <div class="flex items-center justify-between p-4">
-      <h1>SONBILL GALLERY</h1>
+      <NuxtLink to="/">
+        <h1>SONBILL GALLERY</h1>
+      </NuxtLink>
       <button class="text-gray-700 hover:text-gray-900 text-lg">
         <!-- <fa icon="times" /> -->nut
       </button>
@@ -73,7 +75,7 @@
     </div>
     <!-- USER -->
     <div class="fixed bottom-0 p-4">
-      <div>Sonbill</div>
+      <div>SB</div>
       <button @click="logout">LOGOUT</button>
       <div class="mt-5 text-sm">{{ dateTime }}</div>
     </div>
@@ -86,6 +88,7 @@ import { ref, useStore } from "@nuxtjs/composition-api";
 import axios from "axios";
 
 export default {
+  // props: ["name"],
   setup() {
     let dateTime = ref(null);
     const store = useStore();

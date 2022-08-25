@@ -55,7 +55,6 @@ export const actions = {
             Cookies.set(
               "access_token",
               JSON.stringify(token),
-              { expires: 1 }
             );
             vuexContext.commit('SET_TOKEN', token)
           }
@@ -107,7 +106,8 @@ export const actions = {
 // }
 
 export const getters = {
-  token: state => state.token
+  token: state => state.token,
+  user: state => state.user
 }
 
 

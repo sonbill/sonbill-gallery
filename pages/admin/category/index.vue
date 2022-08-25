@@ -1,7 +1,16 @@
 <template>
   <div class="w-full">
-    <Title :title="title" />
-    <table class="W-full">
+    <div class="flex flex-col md:flex-row md:items-center justify-between">
+      <Title :title="title" />
+      <div class="mt-3 md:mt-0">
+        <NuxtLink
+          to="/admin/category/add-category"
+          class="p-2 bg-black text-white text-[14px]"
+          >ADD CATEGORY</NuxtLink
+        >
+      </div>
+    </div>
+    <table class="W-full mt-10">
       <thead>
         <tr class="w-[500px] border-b-[1px]">
           <th>ID</th>
