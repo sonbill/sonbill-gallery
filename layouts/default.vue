@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-col md:flex-row lg:flex md:fixed">
+  <div class="flex-col md:flex-row lg:flex">
     <div>
       <Header />
     </div>

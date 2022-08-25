@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 md:p-10">
     <div>
-      <NuxtLink to="#">
+      <NuxtLink to="/">
         <h1 class="text-3xl md:text-5xl font-extrabold mb-3">
           SONBILL - GALLERY
         </h1>
@@ -26,65 +26,47 @@
         "
       >
         <NuxtLink
-          to="#"
+          to="roll-01"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>HA NOI</span> <span>ROLL 01</span></NuxtLink
         >
         <NuxtLink
-          to="#"
+          to="roll-02"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>DA NANG</span> <span>ROLL 02</span></NuxtLink
         >
         <NuxtLink
-          to="#"
+          to="roll-03"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>HO CHI MINH</span>
           <span>ROLL 03</span></NuxtLink
         >
         <NuxtLink
-          to="#"
+          to="roll-04"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>BIEN HOA</span>
           <span>ROLL 04</span></NuxtLink
         >
         <NuxtLink
-          to="#"
+          to="roll-05"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>BIEN HOA</span>
           <span>ROLL 04</span></NuxtLink
         >
         <NuxtLink
-          to="#"
+          to="roll-06"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>BIEN HOA</span>
           <span>ROLL 04</span></NuxtLink
         >
         <NuxtLink
-          to="#"
+          to="roll-07"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>BIEN HOA</span>
           <span>ROLL 04</span></NuxtLink
         >
         <NuxtLink
-          to="#"
-          class="font-medium hover:font-bold flex justify-between"
-          ><span>2022</span> <span>BIEN HOA</span>
-          <span>ROLL 04</span></NuxtLink
-        >
-        <NuxtLink
-          to="#"
-          class="font-medium hover:font-bold flex justify-between"
-          ><span>2022</span> <span>BIEN HOA</span>
-          <span>ROLL 04</span></NuxtLink
-        >
-        <NuxtLink
-          to="#"
-          class="font-medium hover:font-bold flex justify-between"
-          ><span>2022</span> <span>BIEN HOA</span>
-          <span>ROLL 04</span></NuxtLink
-        >
-        <NuxtLink
-          to="#"
+          to="roll-08"
           class="font-medium hover:font-bold flex justify-between"
           ><span>2022</span> <span>BIEN HOA</span>
           <span>ROLL 04</span></NuxtLink
