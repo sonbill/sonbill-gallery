@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Title :title="title" />
+    <!-- <Title :title="title" /> -->
     <div
       class="
         flex flex-col
@@ -16,28 +16,40 @@
       "
     >
       <h1 class="font-bold text-[24px] mb-10">Input your category</h1>
-      <form>
+      <form @submit.prevent="createCategory">
         <input
+          v-model="categoryForm.title"
           type="text"
           placeholder="Name your category..."
           class="border p-3"
         />
-        <button class="p-3 bg-black text-white">Submit</button>
+        <button @click="createCategory" class="p-3 bg-black text-white">
+          Submit
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import { ref, useStore } from "@nuxtjs/composition-api";
+
 export default {
   layout: "admin",
   setup() {
     const title = "Add Category";
+    const store = useStore();
 
-    return { title };
+    const categoryForm = ref({
+      title: "",
+    });
+
+    const createCategory = async () => {
+      await store.dispatch("category/createCategory", categoryForm.value);
+    };
+
+    return { categoryForm, createCategory };
   },
 };
 </script>
 
-<style>
-</style>
