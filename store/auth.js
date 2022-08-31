@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 
 export const state = () => ({
   token: Cookies.get('access_token') || '',
+  // token: null,
   user: null
 })
 
@@ -54,11 +55,12 @@ export const actions = {
           if (token) {
             Cookies.set(
               "access_token",
-              JSON.stringify(token),
+              JSON.stringify(token), { expires: 1 }
             );
             vuexContext.commit('SET_TOKEN', token)
           }
           resolve(response)
+          console.log(response)
         }).catch((error) => {
           // console.log(err.response.data.message.email);
           reject(error)
