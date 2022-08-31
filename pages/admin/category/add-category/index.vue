@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { ref, useStore } from "@nuxtjs/composition-api";
+import { ref, useStore, useRouter } from "@nuxtjs/composition-api";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -44,6 +44,7 @@ export default {
   setup() {
     const title = "Add Category";
     const store = useStore();
+    const router = useRouter();
 
     const categoryForm = ref({
       title: "",
@@ -66,7 +67,12 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${accessToken}` },
       };
-      await axios.post("store-category", categoryForm.value, config);
+      await axios
+        .post("store-category", categoryForm.value, config)
+        .then((response) => {
+          alert(JSON.stringify(response.data.message));
+          router.push("/admin/category");
+        });
     };
 
     return { categoryForm, createCategory };

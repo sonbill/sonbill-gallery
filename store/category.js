@@ -32,5 +32,22 @@ export const actions = {
         console.log(response)
       });
     }
+  },
+  async getCategories(vuexContext) {
+    return new Promise((resolve, reject) => {
+      const accessToken = JSON.parse(Cookies.get("access_token"));
+      if (accessToken) {
+        axios.get("get-category", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+          .then((response) => {
+            vuexContext.commit('SET_CATEGORIES', response.data);
+            resolve(response.data)
+          })
+          .catch((error) => {
+            reject(error)
+          });
+      }
+    })
   }
 }

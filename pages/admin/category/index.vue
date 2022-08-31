@@ -20,20 +20,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Malcolm Lockyer</td>
-          <td>1961</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>The Eagles</td>
-          <td>1972</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Earth, Wind, and Fire</td>
-          <td>1975</td>
+        <tr v-for="categorie in categories" :key="categorie.id">
+          <td>{{ categorie.id }}</td>
+          <td>{{ categorie.title }}</td>
+          <td>{{ categorie.slug }}</td>
         </tr>
       </tbody>
     </table>
@@ -41,10 +31,19 @@
 </template>
 
 <script>
+import { ref, useStore, computed, onMounted } from "@nuxtjs/composition-api";
+
 export default {
   layout: "admin",
   setup() {
     const title = "Category";
+
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch("category/getCategories");
+    });
+    const categories = computed(() => store.state.category.categories);
+    console.log(categories);
     const columns = [
       "col1",
       "col2",
@@ -67,7 +66,7 @@ export default {
       // },
     ];
 
-    return { title, columns };
+    return { title, columns, categories };
   },
 };
 </script>
