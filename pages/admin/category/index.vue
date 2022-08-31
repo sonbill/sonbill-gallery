@@ -5,7 +5,7 @@
       <div class="mt-3 md:mt-0">
         <NuxtLink
           to="/admin/category/add-category"
-          class="p-2 bg-black text-white text-[14px]"
+          class="p-3 rounded bg-black text-white text-[14px]"
           >ADD CATEGORY</NuxtLink
         >
       </div>

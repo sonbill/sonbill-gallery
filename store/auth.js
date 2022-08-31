@@ -87,7 +87,7 @@ export const actions = {
     })
   },
 
-  async logoutUser({ commit }) {
+  logoutUser({ commit }) {
     const accessToken = JSON.parse(Cookies.get("access_token"));
 
     axios.post("logout")

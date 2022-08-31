@@ -21,18 +21,23 @@
           v-model="categoryForm.title"
           type="text"
           placeholder="Name your category..."
-          class="border p-3"
+          class="border p-3 rounded"
         />
-        <button @click="createCategory" class="p-3 bg-black text-white">
+      </form>
+      <div class="mt-5 space-x-5">
+        <button @click="createCategory" class="p-2 bg-black text-white rounded">
           Submit
         </button>
-      </form>
+        <NuxtLink to="/admin/category">Back</NuxtLink>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { ref, useStore } from "@nuxtjs/composition-api";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default {
   layout: "admin",
@@ -45,7 +50,23 @@ export default {
     });
 
     const createCategory = async () => {
-      await store.dispatch("category/createCategory", categoryForm.value);
+      // await store
+      //   .dispatch("category/createCategory", categoryForm.value)
+      //   .then((response) => {
+      //     console.log(response);
+      //     if (response) {
+      //       router.push("/admin/category");
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     alert(error);
+      //   });
+      const accessToken = JSON.parse(Cookies.get("access_token"));
+
+      const config = {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      };
+      await axios.post("store-category", categoryForm.value, config);
     };
 
     return { categoryForm, createCategory };

@@ -22,12 +22,15 @@ export const actions = {
   async createCategory(credentials) {
     const accessToken = JSON.parse(Cookies.get("access_token"));
     const authUrlApi = "store-category"
-    const config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    };
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+    // const config = {
+    //   headers: { Authorization: `Bearer ${accessToken}` },
+    // };
     if (accessToken) {
-      const res = await axios.post(authUrlApi, credentials, config);
-      alert(res.data.message);
+      await axios.post(authUrlApi, credentials).then((response) => {
+        console.log(response)
+      });
     }
   }
 }
