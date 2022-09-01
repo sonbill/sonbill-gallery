@@ -51,6 +51,18 @@
         >Category</nuxt-link
       >
       <nuxt-link
+        to="/admin/sub-category"
+        class="
+          px-4
+          py-2
+          mx-4
+          focus:shadow-outline focus:outline-none
+          hover:bg-black hover:text-white
+          text-blue
+        "
+        >Sub Category</nuxt-link
+      >
+      <nuxt-link
         to="/admin/Images"
         class="
           px-4
@@ -93,6 +105,29 @@ export default {
     let dateTime = ref(null);
     const store = useStore();
 
+    const columns = [
+      "col1",
+      "col2",
+      "col3",
+      // {
+      //   title: "Reading List",
+      //   icon: "📚",
+      // },
+      // {
+      //   title: "Listings",
+      //   icon: "📜",
+      // },
+      // {
+      //   title: "Podcasts",
+      //   icon: "🎙",
+      // },
+      // {
+      //   title: "Tags",
+      //   icon: "🔖",
+      // },
+    ];
+
+    
     // const logout = async () => {
     //   await axios.post("logout");
     //   const cookie = Cookies.get("access_token");

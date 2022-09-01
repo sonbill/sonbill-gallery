@@ -4,9 +4,9 @@
       <Title :title="title" />
       <div class="mt-3 md:mt-0">
         <NuxtLink
-          to="/admin/category/add-category"
+          to="/admin/sub-category/add-sub-category"
           class="p-3 rounded bg-black text-white text-[14px]"
-          >ADD CATEGORY</NuxtLink
+          >ADD SUB-CATEGORY</NuxtLink
         >
       </div>
     </div>
@@ -14,18 +14,19 @@
       <thead class="w-full">
         <tr class="border-b-[1px] text-center">
           <th>ID</th>
+          <th>CATEGORY ID</th>
           <th>TITLE</th>
           <th>SLUG</th>
           <th></th>
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr v-for="categorie in categories" :key="categorie.id">
-          <td>{{ categorie.id }}</td>
-          <td>{{ categorie.title }}</td>
-          <td>{{ categorie.slug }}</td>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
           <td class="space-x-6">
-            <NuxtLink to="/admin/category/sub-category">Detail</NuxtLink>
             <button>Edit</button>
             <button>Delete</button>
           </td>
@@ -41,18 +42,10 @@ import { ref, useStore, computed, onMounted } from "@nuxtjs/composition-api";
 export default {
   layout: "admin",
   setup() {
-    const title = "Category";
-
+    const title = "Sub Category";
     const store = useStore();
-    onMounted(() => {
-      store.dispatch("category/getCategories");
-    });
-    const categories = computed(() => store.state.category.categories);
 
-    return { title, categories };
+    return { title, store };
   },
 };
 </script>
-
-<style>
-</style>

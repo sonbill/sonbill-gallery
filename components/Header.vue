@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 md:p-10">
+  <div class="p-5 md:p-10 sticky top-0">
     <div>
       <NuxtLink to="/">
         <h1 class="text-3xl md:text-5xl font-extrabold mb-3">
