@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <Title :title="title" /> -->
+    <Title :title="title" />
     <div
       class="
         flex flex-col

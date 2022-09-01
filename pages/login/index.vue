@@ -66,8 +66,8 @@
 <script>
 import {
   ref,
-  computed,
   reactive,
+  computed,
   useRouter,
   useStore,
 } from "@nuxtjs/composition-api";
@@ -76,7 +76,7 @@ export default {
   middleware: ["guest"],
   layout: "loginAndRegister",
   setup() {
-    const loginForm = ref({ email: "", password: "", isLogin: true });
+    const loginForm = reactive({ email: "", password: "", isLogin: true });
 
     const store = useStore();
 

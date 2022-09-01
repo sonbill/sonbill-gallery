@@ -78,7 +78,13 @@
 
 
 <script>
-import { ref, computed, useRouter, useStore } from "@nuxtjs/composition-api";
+import {
+  ref,
+  reactive,
+  computed,
+  useRouter,
+  useStore,
+} from "@nuxtjs/composition-api";
 import axios from "axios";
 
 export default {
@@ -105,7 +111,7 @@ export default {
       PasswordConfirmation.value = !PasswordConfirmation.value;
     };
 
-    const registerForm = ref({
+    const registerForm = reactive({
       name: "",
       email: "",
       password: "",
