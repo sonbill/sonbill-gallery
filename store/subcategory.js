@@ -19,6 +19,7 @@ export const mutations = {
 }
 
 export const actions = {
+  // CREATE SUBCATEGORY
   async createSubCategory(credentials) {
     const accessToken = JSON.parse(Cookies.get("access_token"));
     const authUrlApi = "store-subcategory"
@@ -29,5 +30,23 @@ export const actions = {
       const res = await axios.post(authUrlApi, credentials, config);
       alert(res.data.message);
     }
+  },
+  // GET SUBCATEGORY
+  async getSubCategories(vuexContext) {
+    return new Promise((resolve, reject) => {
+      const accessToken = JSON.parse(Cookies.get("access_token"));
+      if (accessToken) {
+        axios.get("get-subcategory", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+          .then((response) => {
+            vuexContext.commit('SET_SUBCATEGORIES', response.data);
+            resolve(response.data)
+          })
+          .catch((error) => {
+            reject(error)
+          });
+      }
+    })
   }
 }

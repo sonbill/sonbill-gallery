@@ -21,12 +21,13 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
+        <tr v-for="subCategory in subCategories" :key="subCategory.id">
+          <td>{{ subCategory.id }}</td>
+          <td>{{ subCategory.category_id }}</td>
+          <td>{{ subCategory.title }}</td>
+          <td>{{ subCategory.slug }}</td>
           <td class="space-x-6">
+            <NuxtLink to="/admin/category/sub-category">Detail</NuxtLink>
             <button>Edit</button>
             <button>Delete</button>
           </td>
@@ -43,9 +44,17 @@ export default {
   layout: "admin",
   setup() {
     const title = "Sub Category";
-    const store = useStore();
 
-    return { title, store };
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch("subcategory/getSubCategories");
+    });
+    const subCategories = computed(
+      () => store.getters["subcategory/subCategories"]
+    );
+    console.log(subCategories);
+
+    return { title, store, subCategories };
   },
 };
 </script>

@@ -25,7 +25,6 @@
           <td>{{ categorie.title }}</td>
           <td>{{ categorie.slug }}</td>
           <td class="space-x-6">
-            <NuxtLink to="/admin/category/sub-category">Detail</NuxtLink>
             <button>Edit</button>
             <button>Delete</button>
           </td>
@@ -47,7 +46,8 @@ export default {
     onMounted(() => {
       store.dispatch("category/getCategories");
     });
-    const categories = computed(() => store.state.category.categories);
+    const categories = computed(() => store.getters["category/categories"]);
+    console.log(categories);
 
     return { title, categories };
   },
