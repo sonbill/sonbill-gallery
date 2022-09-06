@@ -48,5 +48,15 @@ export const actions = {
           });
       }
     })
+  },
+  async deleteSubCategory({ commit, state }, id) {
+    const accessToken = JSON.parse(Cookies.get("access_token"));
+    if (accessToken) {
+      await axios.delete(`sub-categories/${id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      const newSubCategories = state.subCategories.filter(item => item.id !== id);
+      commit('SET_SUBCATEGORIES', newSubCategories);
+    }
   }
 }

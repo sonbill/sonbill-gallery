@@ -24,9 +24,16 @@
           <td>{{ category.id }}</td>
           <td>{{ category.title }}</td>
           <td>{{ category.slug }}</td>
-          <td class="space-x-6">
-            <button>Edit</button>
-            <button @click="deleteCategory(category.id)">Delete</button>
+          <td class="space-x-6 flex">
+            <button class="flex items-center">
+              <span class="material-icons"> edit </span>
+            </button>
+            <button
+              class="flex items-center"
+              @click="deleteCategory(category.id)"
+            >
+              <span class="material-icons"> clear </span>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -48,17 +55,16 @@ export default {
     const title = "Category";
 
     const store = useStore();
-    
+
     onMounted(() => {
       store.dispatch("category/getCategories");
     });
     const categories = computed(() => store.getters["category/categories"]);
-
-    const deleteCategory = async (categoryid) => {
-      store.dispatch("category/deleteCategory", categoryid);
-    };
-
     console.log(categories);
+
+    const deleteCategory = async (category_id) => {
+      store.dispatch("category/deleteCategory", category_id);
+    };
 
     return { title, categories, deleteCategory };
   },

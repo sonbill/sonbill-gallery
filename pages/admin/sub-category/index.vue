@@ -26,10 +26,17 @@
           <td>{{ subCategory.category_id }}</td>
           <td>{{ subCategory.title }}</td>
           <td>{{ subCategory.slug }}</td>
-          <td class="space-x-6">
+          <td class="space-x-6 flex">
             <NuxtLink to="/admin/category/sub-category">Detail</NuxtLink>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button class="flex items-center">
+              <span class="material-icons"> edit </span>
+            </button>
+            <button
+              class="flex items-center"
+              @click="deleteSubCategory(subCategory.id)"
+            >
+              <span class="material-icons"> clear </span>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -49,12 +56,18 @@ export default {
     onMounted(() => {
       store.dispatch("subcategory/getSubCategories");
     });
+
     const subCategories = computed(
       () => store.getters["subcategory/subCategories"]
     );
     console.log(subCategories);
 
-    return { title, store, subCategories };
+    
+    const deleteSubCategory = async (subCategory_id) => {
+      store.dispatch("subcategory/deleteSubCategory", subCategory_id);
+    };
+
+    return { title, store, subCategories, deleteSubCategory };
   },
 };
 </script>
