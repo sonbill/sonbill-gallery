@@ -49,5 +49,18 @@ export const actions = {
           });
       }
     })
+  },
+
+  async deleteCategory({ commit, state }, id) {
+    const accessToken = JSON.parse(Cookies.get("access_token"));
+    if (accessToken) {
+      axios.delete(`categories/${id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      const newCategories = state.categories.filter(item => item.id !== id);
+      commit('SET_CATEGORIES', newCategories);
+    } else {
+
+    }
   }
 }

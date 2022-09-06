@@ -20,13 +20,13 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr v-for="categorie in categories" :key="categorie.id">
-          <td>{{ categorie.id }}</td>
-          <td>{{ categorie.title }}</td>
-          <td>{{ categorie.slug }}</td>
+        <tr v-for="category in categories" :key="category.id">
+          <td>{{ category.id }}</td>
+          <td>{{ category.title }}</td>
+          <td>{{ category.slug }}</td>
           <td class="space-x-6">
             <button>Edit</button>
-            <button>Delete</button>
+            <button @click="deleteCategory(category.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -35,7 +35,12 @@
 </template>
 
 <script>
-import { ref, useStore, computed, onMounted } from "@nuxtjs/composition-api";
+import {
+  useRouter,
+  useStore,
+  computed,
+  onMounted,
+} from "@nuxtjs/composition-api";
 
 export default {
   layout: "admin",
@@ -43,13 +48,19 @@ export default {
     const title = "Category";
 
     const store = useStore();
+    
     onMounted(() => {
       store.dispatch("category/getCategories");
     });
     const categories = computed(() => store.getters["category/categories"]);
+
+    const deleteCategory = async (categoryid) => {
+      store.dispatch("category/deleteCategory", categoryid);
+    };
+
     console.log(categories);
 
-    return { title, categories };
+    return { title, categories, deleteCategory };
   },
 };
 </script>
