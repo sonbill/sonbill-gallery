@@ -12,9 +12,39 @@
               v-model="loginForm.email"
               type="email"
               placeholder="Email"
-              class="border p-3 rounded focus:outline-none"
+              class="
+                appearance-none
+                w-full
+                bg-white
+                border border-gray-200
+                hover:border-gray-500
+                px-4
+                py-2
+                pr-8
+                rounded
+                shadow
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
             />
-            <div class="w-full flex items-center border p-3 rounded">
+            <div
+              class="
+                w-full
+                flex
+                items-center
+                appearance-none
+                bg-white
+                border border-gray-200
+                hover:border-gray-500
+                px-4
+                py-2
+                pr-8
+                rounded
+                shadow
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            >
               <input
                 v-model="loginForm.password"
                 :type="showPassword ? 'text' : 'password'"

@@ -15,14 +15,57 @@
             <input
               v-model="registerForm.name"
               placeholder="Name"
-              class="border p-3 rounded"
+              class="
+                appearance-none
+                w-full
+                bg-white
+                border border-gray-200
+                hover:border-gray-500
+                px-4
+                py-2
+                pr-8
+                rounded
+                shadow
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
             />
             <input
               v-model="registerForm.email"
               placeholder="Email"
-              class="border p-3 rounded"
+              class="
+                appearance-none
+                w-full
+                bg-white
+                border border-gray-200
+                hover:border-gray-500
+                px-4
+                py-2
+                pr-8
+                rounded
+                shadow
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
             />
-            <div class="w-full flex items-center border p-3 rounded">
+            <div
+              class="
+                flex
+                items-center
+                appearance-none
+                w-full
+                bg-white
+                border border-gray-200
+                hover:border-gray-500
+                px-4
+                py-2
+                pr-8
+                rounded
+                shadow
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            >
               <input
                 v-model="registerForm.password"
                 :type="showPassword ? 'text' : 'password'"
@@ -36,7 +79,24 @@
                 <span v-else class="material-icons"> visibility_off </span>
               </button>
             </div>
-            <div class="w-full flex items-center border p-3 rounded">
+            <div
+              class="
+                flex
+                items-center
+                appearance-none
+                w-full
+                bg-white
+                border border-gray-200
+                hover:border-gray-500
+                px-4
+                py-2
+                pr-8
+                rounded
+                shadow
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            >
               <input
                 v-model="registerForm.password_confirmation"
                 :type="PasswordConfirmation ? 'text' : 'password'"
