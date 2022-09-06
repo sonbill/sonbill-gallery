@@ -136,7 +136,7 @@ export default {
     // REGISTER FUNCTION
     const register = async () => {
       await store
-        .dispatch("auth/authenticateUser", registerForm.value)
+        .dispatch("auth/authenticateUser", registerForm)
         .then((response) => {
           console.log(response.data.message);
           router.push("/login");

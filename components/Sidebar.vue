@@ -63,7 +63,7 @@
         >Sub Category</nuxt-link
       >
       <nuxt-link
-        to="/admin/Images"
+        to="/admin/image-gallery"
         class="
           px-4
           py-2
@@ -127,7 +127,6 @@ export default {
       // },
     ];
 
-    
     // const logout = async () => {
     //   await axios.post("logout");
     //   const cookie = Cookies.get("access_token");

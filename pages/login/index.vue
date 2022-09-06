@@ -91,7 +91,7 @@ export default {
     // LOGIN FUNCTION
     const login = async () => {
       await store
-        .dispatch("auth/authenticateUser", loginForm.value)
+        .dispatch("auth/authenticateUser", loginForm)
         .then((response) => {
           if (response.data) {
             router.push("/admin/dashboard");
