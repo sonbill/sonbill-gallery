@@ -72,7 +72,11 @@
                 placeholder="Password"
                 class="grow focus:outline-none"
               />
-              <button @click="togglePassword" class="flex items-center">
+              <button
+                @click="togglePassword"
+                type="button"
+                class="flex items-center"
+              >
                 <span v-if="showPassword" class="material-icons">
                   visibility
                 </span>
@@ -105,6 +109,7 @@
               />
               <button
                 @click="togglePasswordConfirmation"
+                type="button"
                 class="flex items-center"
               >
                 <span v-if="PasswordConfirmation" class="material-icons">

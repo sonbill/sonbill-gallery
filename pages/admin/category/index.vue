@@ -25,7 +25,7 @@
           <td>{{ category.title }}</td>
           <td>{{ category.slug }}</td>
           <td class="space-x-6 flex">
-            <button class="flex items-center">
+            <button class="flex items-center" @click="showModal = true">
               <span class="material-icons"> edit </span>
             </button>
             <button
@@ -38,11 +38,13 @@
         </tr>
       </tbody>
     </table>
+    <UpdatePopUp v-show="showModal" @close-modal="showModal = false" />
   </div>
 </template>
 
 <script>
 import {
+  ref,
   useRouter,
   useStore,
   computed,
@@ -54,11 +56,14 @@ export default {
   setup() {
     const title = "Category";
 
+    const showModal = ref(false);
+
     const store = useStore();
 
     onMounted(() => {
       store.dispatch("category/getCategories");
     });
+
     const categories = computed(() => store.getters["category/categories"]);
     console.log(categories);
 
@@ -66,10 +71,8 @@ export default {
       store.dispatch("category/deleteCategory", category_id);
     };
 
-    return { title, categories, deleteCategory };
+    return { title, categories, deleteCategory, showModal };
   },
 };
 </script>
 
-<style>
-</style>

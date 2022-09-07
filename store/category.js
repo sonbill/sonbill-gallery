@@ -50,6 +50,14 @@ export const actions = {
       }
     })
   },
+  async updateCategory({ commit, state }, id) {
+    const accessToken = JSON.parse(Cookies.get("access_token"));
+    if (accessToken) {
+      await axios.put(`categories/${id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+    }
+  },
 
   async deleteCategory({ commit, state }, id) {
     const accessToken = JSON.parse(Cookies.get("access_token"));
