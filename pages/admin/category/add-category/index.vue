@@ -89,7 +89,7 @@ export default {
         });
     };
 
-    return { categoryForm, createCategory };
+    return { title, categoryForm, createCategory };
   },
 };
 </script>

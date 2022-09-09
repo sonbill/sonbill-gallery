@@ -1,9 +1,9 @@
 <template>
   <div class="w-full">
     <Title :title="title" />
-    <table class="W-full">
-      <thead>
-        <tr class="w-[500px] border-b-[1px]">
+    <table class="table-fixed w-full mt-10">
+      <thead class="w-full">
+        <tr class="border-b-[1px] text-center">
           <th>ID</th>
           <th>NAME</th>
           <th>EMAIL</th>
@@ -11,21 +11,20 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Malcolm Lockyer</td>
-          <td>1961</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>The Eagles</td>
-          <td>1972</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Earth, Wind, and Fire</td>
-          <td>1975</td>
+      <tbody class="text-center">
+        <tr v-for="account in accounts" :key="account.id">
+          <td>{{ account.id }}</td>
+          <td>{{ account.name }}</td>
+          <td>{{ account.email }}</td>
+          <td>{{ account.created_at }}</td>
+          <td>
+             <button
+              class="flex items-center"
+            >
+              <span class="material-icons"> clear </span>
+            </button>
+          </td>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -33,12 +32,26 @@
 </template>
 
 <script>
+import {
+  ref,
+  useRouter,
+  useStore,
+  computed,
+  onMounted,
+} from "@nuxtjs/composition-api";
 export default {
   layout: "admin",
   setup() {
     const title = "Accounts";
+    const store = useStore();
 
-    return { title };
+    onMounted(() => {
+      store.dispatch("accounts/getAccounts");
+    });
+
+    const accounts = computed(() => store.getters["accounts/accounts"]);
+    console.log(accounts);
+    return { title, accounts };
   },
 };
 </script>
