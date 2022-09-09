@@ -18,12 +18,12 @@
           <td>{{ account.email }}</td>
           <td>{{ account.created_at }}</td>
           <td>
-             <button
+            <button
               class="flex items-center"
+              @click="deleteAccount(account.id)"
             >
               <span class="material-icons"> clear </span>
             </button>
-          </td>
           </td>
         </tr>
       </tbody>
@@ -49,9 +49,13 @@ export default {
       store.dispatch("accounts/getAccounts");
     });
 
+    const deleteAccount = (id) => {
+      store.dispatch("accounts/deleteAccount", id);
+    };
+
     const accounts = computed(() => store.getters["accounts/accounts"]);
     console.log(accounts);
-    return { title, accounts };
+    return { title, accounts, deleteAccount };
   },
 };
 </script>

@@ -34,5 +34,15 @@ export const actions = {
           });
       }
     })
+  },
+  async deleteAccount({ commit, state }, id) {
+    const accessToken = JSON.parse(Cookies.get("access_token"));
+    if (accessToken) {
+      await axios.delete(`accounts/${id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      const newAccounts = state.accounts.filter(item => item.id !== id);
+      commit('SET_ACCOUNTS', newAccounts);
+    }
   }
 }
