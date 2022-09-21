@@ -39,10 +39,18 @@
 </template>
 
 <script>
+import { ref, useStore, computed, onMounted } from "@nuxtjs/composition-api";
+
 export default {
   layout: "admin",
   setup() {
     const title = "IMAGE-GALLERY";
+
+    const store = useStore();
+
+    onMounted(() => {
+      store.dispatch("image/getImages");
+    });
 
     return { title };
   },
