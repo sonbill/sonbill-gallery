@@ -14,23 +14,37 @@
       <thead>
         <tr class="w-[500px] border-b-[1px]">
           <th>ID</th>
-          <th>SUB CATEGORY ID</th>
+          <th>IMAGE</th>
           <th>TITLE</th>
+          <th>SUB CATEGORY ID</th>
+          <th>SIZE</th>
           <th>SLUG</th>
           <th>CREATED AT</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr class="text-center">
-          <td>1</td>
-          <td>1</td>
-          <td>Malcolm Lockyer</td>
-          <td>1</td>
-          <td>6/9/2022</td>
-          <td class="space-x-6">
-            <button>Edit</button>
-            <button>Delete</button>
+        <tr class="text-center" v-for="image in images" :key="image.id">
+          <td>{{ image.id }}</td>
+          <td>
+            <img
+              :src="'http://localhost:8000/storage/images/' + image.image_path"
+              alt=""
+              class="w-10 h-10 object-cover"
+            />
+          </td>
+          <td>{{ image.title }}</td>
+          <td>{{ image.subcategory_id }}</td>
+          <td>{{ image.size }}</td>
+          <td>{{ image.slug }}</td>
+          <td>{{ image.created_at }}</td>
+          <td class="space-x-6 flex">
+            <button class="flex items-center">
+              <span class="material-icons"> edit </span>
+            </button>
+            <button class="flex items-center">
+              <span class="material-icons"> clear </span>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -52,7 +66,10 @@ export default {
       store.dispatch("image/getImages");
     });
 
-    return { title };
+    const images = computed(() => store.getters["image/images"]);
+    console.log(images);
+
+    return { title, images };
   },
 };
 </script>
