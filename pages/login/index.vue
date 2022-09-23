@@ -1,13 +1,17 @@
 <template>
   <div class="container mx-auto h-full flex justify-center items-center">
     <div class="w-full md:w-1/2">
-      <!-- <p>{{ isAuth }}</p> -->
       <h1 class="font-bold text-[36px] mb-6 text-center text-black pt-24">
         Login
       </h1>
       <div class="space-y-5 p-8 border-t-12 bg-white mb-6 rounded-lg shadow-lg">
-        <form @submit.prevent="login">
+        <form @submit.prevent="login" @keyup.enter="login">
           <div class="flex flex-col space-y-5">
+            <div v-if="errors" class="text-red-500">
+              <p v-for="email in errors.errors.email" :key="email.id">
+                {{ email }}
+              </p>
+            </div>
             <input
               v-model="loginForm.email"
               type="email"
@@ -27,6 +31,11 @@
                 focus:outline-none focus:shadow-outline
               "
             />
+            <div v-if="errors" class="text-red-500">
+              <p v-for="password in errors.errors.password" :key="password.id">
+                {{ password }}
+              </p>
+            </div>
             <div
               class="
                 w-full
@@ -114,7 +123,10 @@ export default {
 
     const store = useStore();
 
-    const router = useRouter();
+    // const errors = store.getters("auth/errors");
+    const errors = computed(() => store.getters["auth/errors"]);
+
+    // const router = useRouter();
 
     // SHOWPASSWORD
     const showPassword = ref(false);
@@ -124,16 +136,7 @@ export default {
 
     // LOGIN FUNCTION
     const login = async () => {
-      await store
-        .dispatch("auth/authenticateUser", loginForm)
-        .then((response) => {
-          if (response.data) {
-            router.push("/admin/dashboard");
-          }
-        })
-        .catch((error) => {
-          alert(error);
-        });
+      await store.dispatch("auth/authenticateUser", loginForm);
 
       // const data = await axios
       //   .post("login", loginForm.value)
@@ -164,9 +167,10 @@ export default {
       //   });
       // return { data };
     };
+
     // const isAuth = computed(() => store.state.auth.auth);
     // console.log(isAuth);
-    return { loginForm, login, togglePassword, showPassword };
+    return { loginForm, login, togglePassword, showPassword, errors };
   },
 };
 </script>

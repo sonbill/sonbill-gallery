@@ -9,7 +9,8 @@ import Cookies from "js-cookie";
 export const state = () => ({
   token: Cookies.get('access_token') || '',
   // token: null,
-  user: null
+  user: null,
+  errors: null,
 })
 
 
@@ -22,6 +23,9 @@ export const mutations = {
   },
   SET_USER(state, user) {
     state.user = user
+  },
+  SET_ERRORS(state, errors) {
+    state.errors = errors
   }
 };
 
@@ -58,12 +62,13 @@ export const actions = {
               JSON.stringify(token), { expires: 1 }
             );
             vuexContext.commit('SET_TOKEN', token)
+            this.$router.push('/admin/dashboard')
           }
           resolve(response)
           console.log(response)
         }).catch((error) => {
           // console.log(err.response.data.message.email);
-          reject(error)
+          reject(vuexContext.commit("SET_ERRORS", error.response.data));
         });
     })
   },
@@ -79,9 +84,7 @@ export const actions = {
             resolve(response.data)
           })
           .catch((error) => {
-            reject(error)
-            // console.log(err.response.data.message.email);
-            // return error.response.data.message;
+            reject(vuexContext.commit("SET_ERRORS", error.response.data));
           });
       }
     })
@@ -109,7 +112,8 @@ export const actions = {
 
 export const getters = {
   token: state => state.token,
-  user: state => state.user
+  user: state => state.user,
+  errors: state => state.errors
 }
 
 
