@@ -67,7 +67,6 @@ export const actions = {
           resolve(response)
           console.log(response)
         }).catch((error) => {
-          // console.log(err.response.data.message.email);
           reject(vuexContext.commit("SET_ERRORS", error.response.data));
         });
     })

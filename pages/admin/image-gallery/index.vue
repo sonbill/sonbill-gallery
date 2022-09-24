@@ -35,7 +35,7 @@
           </td>
           <td>{{ image.title }}</td>
           <td>{{ image.subcategory_id }}</td>
-          <td>{{ image.size }}</td>
+          <td>{{ image.size }} MB</td>
           <td>{{ image.slug }}</td>
           <td>{{ image.created_at }}</td>
           <td class="space-x-6 flex">
@@ -65,6 +65,9 @@ export default {
     onMounted(() => {
       store.dispatch("image/getImages");
     });
+
+    // const bytesToMegaBytes = (bytes) => bytes / 1024 ** 2;
+    // console.log(bytesToMegaBytes(4675758));
 
     const images = computed(() => store.getters["image/images"]);
     console.log(images);
