@@ -4,7 +4,7 @@
       <Title :title="title" />
       <div class="mt-3 md:mt-0">
         <NuxtLink
-          to="/admin/category/add-category"
+          to="/admin/image-gallery/add-image"
           class="p-3 rounded bg-black text-white text-[14px]"
           >ADD IMAGE</NuxtLink
         >
