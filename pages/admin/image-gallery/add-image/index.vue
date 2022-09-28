@@ -15,8 +15,13 @@
       "
     >
       <h1 class="font-bold text-[24px] mb-10">Input your image</h1>
-      <form @submit.prevent="createSubCategory" class="flex flex-col space-y-5">
+      <form
+        @submit.prevent="onSubmitAddImage"
+        class="flex flex-col space-y-5"
+        enctype="multipart/form-data"
+      >
         <select
+          v-model="subCategory_id"
           class="
             p-3
             w-full
@@ -44,6 +49,8 @@
         <input
           type="text"
           placeholder="Name your image..."
+          accept="image/png, image/jpeg"
+          v-model="titleImg"
           class="
             appearance-none
             w-full
@@ -78,12 +85,21 @@
             "
             >Chọn tệp</label
           >
-          <input type="file" id="uploadImageButton" hidden />
-          <span id="file-chosen">No file chosen</span>
+          <input
+            type="file"
+            id="uploadImageButton"
+            hidden
+            @change="onFileUpload"
+          />
         </div>
       </form>
       <div class="mt-5 space-x-5">
-        <button class="p-2 bg-black text-white rounded">Submit</button>
+        <button
+          class="p-2 bg-black text-white rounded"
+          @click="onSubmitAddImage"
+        >
+          Submit
+        </button>
         <NuxtLink to="/admin/sub-category">Back</NuxtLink>
       </div>
     </div>
@@ -106,15 +122,38 @@ export default {
     const store = useStore();
     const router = useRouter();
 
+    const myFile = ref(null);
+    const titleImg = ref("");
+    const subCategory_id = ref("");
+
+    const onFileUpload = (e) => {
+      myFile.value = e.target.files[0];
+    };
+
+    const onSubmitAddImage = async () => {
+      const formData = new FormData();
+      formData.append("image_path", myFile.value);
+      formData.append("title", titleImg.value);
+      formData.append("subcategory_id", subCategory_id.value);
+      await store.dispatch("image/addImage", formData);
+    };
+
     onMounted(() => {
       store.dispatch("subcategory/getSubCategories");
     });
     const subCategories = computed(
       () => store.getters["subcategory/subCategories"]
     );
-    console.log(subCategories);
 
-    return { title, subCategories };
+    return {
+      title,
+      subCategories,
+      myFile,
+      titleImg,
+      subCategory_id,
+      onSubmitAddImage,
+      onFileUpload,
+    };
   },
 };
 </script>
