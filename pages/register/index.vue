@@ -12,9 +12,10 @@
       >
         <form @submit.prevent="register">
           <div class="flex flex-col space-y-3 mb-5">
+            <!-- INPUT / EMAIL -->
             <input
-              v-model="registerForm.name"
-              placeholder="Name"
+              v-model="registerForm.email"
+              placeholder="Email"
               class="
                 appearance-none
                 w-full
@@ -30,9 +31,10 @@
                 focus:outline-none focus:shadow-outline
               "
             />
+            <!-- INPUT / NAME -->
             <input
-              v-model="registerForm.email"
-              placeholder="Email"
+              v-model="registerForm.name"
+              placeholder="Name"
               class="
                 appearance-none
                 w-full
@@ -120,6 +122,11 @@
             </div>
           </div>
         </form>
+        <div v-if="errors" class="text-red-500">
+          <p>
+            {{ errors.message }}
+          </p>
+        </div>
         <div>
           <button
             @click="register"
@@ -165,7 +172,12 @@ export default {
     const showPassword = ref(false);
     const PasswordConfirmation = ref(false);
 
-    // let messages = [];
+    const registerForm = reactive({
+      name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    });
 
     // SHOW PASSWORD
     const togglePassword = () => {
@@ -176,28 +188,6 @@ export default {
       PasswordConfirmation.value = !PasswordConfirmation.value;
     };
 
-    const registerForm = reactive({
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-    });
-
-    // data.value = await axios.post("https:///localhost:8000/api/register");
-
-    // const register = async () => {
-    //   const data = ref(null);
-    //   data = await $axios.$post("https:///localhost:8000/api/register");
-    //   return { data };
-    // };
-    // const register = async () => {
-    //   const { $http } = useContext();
-    //   const data = useAsync(() =>
-    //     $http.$post("https:///localhost:8000/api/register")
-    //   );
-    //   return { data };
-    // };
-
     // REGISTER FUNCTION
     const register = async () => {
       await store
@@ -206,25 +196,13 @@ export default {
           console.log(response.data.message);
           router.push("/login");
         });
-
-      // const data = await axios
-      //   .post("register", registerForm.value)
-      //   .then((response) => {
-      //     console.log(response);
-      //     return response.data;
-      //   })
-      //   .catch((err) => {
-      //     let messages = err.response.data.message;
-      //     console.log(err.response.data.message);
-      //     return messages;
-      //   });
-      // // console.log(data);
-      // return { data, messages };
     };
+    const errors = computed(() => store.getters["auth/errors"]);
 
     return {
       // messages,
       register,
+      errors,
       registerForm,
       showPassword,
       PasswordConfirmation,

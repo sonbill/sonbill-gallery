@@ -67,7 +67,8 @@ export const actions = {
           resolve(response)
           console.log(response)
         }).catch((error) => {
-          reject(vuexContext.commit("SET_ERRORS", error.response.data));
+          vuexContext.commit("SET_ERRORS", error.response.data);
+          console.log(error.response.data)
         });
     })
   },
