@@ -20,7 +20,7 @@ export const mutations = {
 
 export const actions = {
   // CREATE SUBCATEGORY
-  async createSubCategory(credentials) {
+  async createSubCategory(vuexContext, credentials) {
     const accessToken = JSON.parse(Cookies.get("access_token"));
     const authUrlApi = "store-subcategory"
     const config = {
