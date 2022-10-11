@@ -61,7 +61,7 @@ export default {
     const store = useStore();
 
     onMounted(() => {
-      store.dispatch("category/getCategories");
+      store.dispatch("category/getCategory");
     });
 
     const categories = computed(() => store.getters["category/categories"]);

@@ -37,12 +37,29 @@ export const actions = {
     return new Promise((resolve, reject) => {
       const accessToken = JSON.parse(Cookies.get("access_token"));
       if (accessToken) {
-        axios.get("get-category", {
+        axios.get("get-category-list", {
           headers: { Authorization: `Bearer ${accessToken}` },
         })
           .then((response) => {
             vuexContext.commit('SET_CATEGORIES', response.data);
             resolve(response.data)
+          })
+          .catch((error) => {
+            reject(error)
+          });
+      }
+    })
+  },
+  async getCategory(vuexContext) {
+    return new Promise((resolve, reject) => {
+      const accessToken = JSON.parse(Cookies.get("access_token"));
+      if (accessToken) {
+        axios.get("get-category", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+          .then((response) => {
+            vuexContext.commit('SET_CATEGORIES', response.data.data);
+            resolve(response.data.data)
           })
           .catch((error) => {
             reject(error)
