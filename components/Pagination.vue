@@ -1,9 +1,9 @@
 <template>
   <nav aria-label="Page navigation example">
     <ul class="inline-flex -space-x-px">
-      <li>
+      <li :class="{ disabled: !prev_page_url }">
         <a
-          href="#"
+          :href="prev_page_url"
           class="
             py-2
             px-3
@@ -36,12 +36,12 @@
             hover:bg-blue-100 hover:text-blue-700
             dark:border-gray-700 dark:bg-gray-700 dark:text-white
           "
-          >3</a
+          >{{ current_page }}</a
         >
       </li>
-      <li>
+      <li :class="{ disabled: !next_page_url }">
         <a
-          href="#"
+          :href="next_page_url"
           class="
             py-2
             px-3
@@ -65,6 +65,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["current_page", "links_page_url", "prev_page_url", "next_page_url"],
+  setup() {},
+};
 </script>
 

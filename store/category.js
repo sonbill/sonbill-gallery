@@ -3,18 +3,47 @@ import Cookies from "js-cookie";
 
 
 export const state = () => ({
-  categories: []
+  categories: [],
+  current_page: null,
+  links: [],
+  next_page_url: null,
+  prev_page_url: null
 })
 
 export const getters = {
   categories: (state) => {
     return state.categories;
+  },
+  current_page: (state) => {
+    return state.current_page;
+  },
+  next_page_url: (state) => {
+    return state.next_page_url
+  },
+  prev_page_url: (state) => {
+    return state.prev_page_url
+  },
+  links: (state) => {
+    return state.links
   }
+
 }
 
 export const mutations = {
   SET_CATEGORIES(state, categories) {
     state.categories = categories;
+  },
+  SET_CURRENT_PAGES(state, page) {
+    state.current_page = page;
+  },
+  SET_NEXT_PAGE_URL(state, url) {
+    state.next_page_url = url;
+  },
+  SET_PREV_PAGE_URL(state, url) {
+    state.previous_page_url = url;
+  },
+  SET_LINKS_PAGE_URL(state, url) {
+    state.links_page_url = url;
   }
 }
 
@@ -59,7 +88,11 @@ export const actions = {
         })
           .then((response) => {
             vuexContext.commit('SET_CATEGORIES', response.data.data);
-            resolve(response.data.data)
+            vuexContext.commit('SET_CURRENT_PAGES', response.data.current_page);
+            vuexContext.commit('SET_NEXT_PAGE_URL', response.data.next_page_url);
+            vuexContext.commit('SET_PREV_PAGE_URL', response.data.prev_page_url);
+            vuexContext.commit('SET_LINKS_PAGE_URL', response.data.links);
+            console.log(response.data.current_page)
           })
           .catch((error) => {
             reject(error)

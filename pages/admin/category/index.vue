@@ -38,6 +38,12 @@
         </tr>
       </tbody>
     </table>
+    <Pagination
+      :current_page="current_page"
+      :links_page_url="links_page_url"
+      :next_page_url="next_page_url"
+      :prev_page_url="prev_page_url"
+    />
     <UpdatePopUp v-show="showModal" @close-modal="showModal = false" />
   </div>
 </template>
@@ -65,13 +71,29 @@ export default {
     });
 
     const categories = computed(() => store.getters["category/categories"]);
-    console.log(categories);
+    const current_page = computed(() => store.getters["category/current_page"]);
+    const links_page_url = computed(() => store.getters["category/links"]);
+    const next_page_url = computed(
+      () => store.getters["category/next_page_url"]
+    );
+    const prev_page_url = computed(
+      () => store.getters["category/prev_page_url"]
+    );
 
     const deleteCategory = async (category_id) => {
-      store.dispatch("category/deleteCategory", category_id);
+      await store.dispatch("category/deleteCategory", category_id);
     };
 
-    return { title, categories, deleteCategory, showModal };
+    return {
+      title,
+      categories,
+      current_page,
+      links_page_url,
+      prev_page_url,
+      next_page_url,
+      deleteCategory,
+      showModal,
+    };
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <Sidebar />
     <div class="ml-[256px] p-10 min-h-screen">
       <Nuxt />
-      <Pagination class="absolute bottom-5 right-10" />
+      <!-- <Pagination class="absolute bottom-5 right-10" /> -->
     </div>
   </div>
 </template>
