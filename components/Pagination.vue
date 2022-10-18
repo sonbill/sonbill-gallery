@@ -2,8 +2,8 @@
   <nav aria-label="Page navigation example">
     <ul class="inline-flex -space-x-px">
       <li :class="{ disabled: !prev_page_url }">
-        <a
-          :href="prev_page_url"
+        <button
+          @click="$emit('getPrevUrl', prev_page_url)"
           class="
             py-2
             px-3
@@ -20,8 +20,9 @@
             dark:hover:bg-gray-700
             dark:hover:text-white
           "
-          >Prev</a
         >
+          Prev
+        </button>
       </li>
       <li>
         <a

@@ -128,6 +128,23 @@ export const actions = {
         })
           .then((response) => {
             vuexContext.commit('SET_CATEGORIES', response.data.data);
+            console.log(response.data)
+          })
+          .catch((error) => {
+            reject(error)
+          });
+      }
+    })
+  },
+  async prevPageUrlHandler(vuexContext, prev_page_url) {
+    return new Promise((resolve, reject) => {
+      const accessToken = JSON.parse(Cookies.get("access_token"));
+      if (accessToken) {
+        axios.get(prev_page_url, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+          .then((response) => {
+            vuexContext.commit('SET_CATEGORIES', response.data.data);
           })
           .catch((error) => {
             reject(error)

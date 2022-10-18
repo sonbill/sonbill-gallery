@@ -44,14 +44,13 @@
       :next_page_url="next_page_url"
       :prev_page_url="prev_page_url"
       @getNextUrl="getNextUrl(next_page_url)"
+      @getPrevUrl="getPrevUrl(prev_page_url)"
     />
     <UpdatePopUp v-show="showModal" @close-modal="showModal = false" />
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Cookies from "js-cookie";
 import {
   ref,
   useRouter,
@@ -74,7 +73,10 @@ export default {
     });
 
     const getNextUrl = async (next_page_url) => {
-      store.dispatch("category/nextPageUrlHandler", next_page_url);
+      await store.dispatch("category/nextPageUrlHandler", next_page_url);
+    };
+    const getPrevUrl = async (prev_page_url) => {
+      await store.dispatch("category/prevPageUrlHandler", prev_page_url);
     };
 
     const categories = computed(() => store.getters["category/categories"]);
@@ -102,6 +104,7 @@ export default {
       deleteCategory,
       showModal,
       getNextUrl,
+      getPrevUrl,
     };
   },
 };
