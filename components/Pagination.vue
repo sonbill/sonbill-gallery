@@ -20,7 +20,7 @@
             dark:hover:bg-gray-700
             dark:hover:text-white
           "
-          >Previous</a
+          >Prev</a
         >
       </li>
       <li>
@@ -40,8 +40,8 @@
         >
       </li>
       <li :class="{ disabled: !next_page_url }">
-        <a
-          :href="next_page_url"
+        <button
+          @click="$emit('getNextUrl', next_page_url)"
           class="
             py-2
             px-3
@@ -57,8 +57,9 @@
             dark:hover:bg-gray-700
             dark:hover:text-white
           "
-          >Next</a
         >
+          Next
+        </button>
       </li>
     </ul>
   </nav>

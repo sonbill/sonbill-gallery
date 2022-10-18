@@ -25,7 +25,7 @@ export const getters = {
   },
   links: (state) => {
     return state.links
-  }
+  },
 
 }
 
@@ -43,7 +43,7 @@ export const mutations = {
     state.previous_page_url = url;
   },
   SET_LINKS_PAGE_URL(state, url) {
-    state.links_page_url = url;
+    state.links = url;
   }
 }
 
@@ -92,7 +92,6 @@ export const actions = {
             vuexContext.commit('SET_NEXT_PAGE_URL', response.data.next_page_url);
             vuexContext.commit('SET_PREV_PAGE_URL', response.data.prev_page_url);
             vuexContext.commit('SET_LINKS_PAGE_URL', response.data.links);
-            console.log(response.data.current_page)
           })
           .catch((error) => {
             reject(error)
@@ -118,5 +117,23 @@ export const actions = {
       const newCategories = state.categories.filter(item => item.id !== id);
       commit('SET_CATEGORIES', newCategories);
     }
-  }
+  },
+
+  async nextPageUrlHandler(vuexContext, next_page_url) {
+    return new Promise((resolve, reject) => {
+      const accessToken = JSON.parse(Cookies.get("access_token"));
+      if (accessToken) {
+        axios.get(next_page_url, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+          .then((response) => {
+            vuexContext.commit('SET_CATEGORIES', response.data.data);
+          })
+          .catch((error) => {
+            reject(error)
+          });
+      }
+    })
+  },
+
 }
