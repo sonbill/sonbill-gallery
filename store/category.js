@@ -40,7 +40,7 @@ export const mutations = {
     state.next_page_url = url;
   },
   SET_PREV_PAGE_URL(state, url) {
-    state.previous_page_url = url;
+    state.prev_page_url = url;
   },
   SET_LINKS_PAGE_URL(state, url) {
     state.links = url;
@@ -89,8 +89,8 @@ export const actions = {
           .then((response) => {
             vuexContext.commit('SET_CATEGORIES', response.data.data);
             vuexContext.commit('SET_CURRENT_PAGES', response.data.current_page);
-            vuexContext.commit('SET_NEXT_PAGE_URL', response.data.next_page_url);
-            vuexContext.commit('SET_PREV_PAGE_URL', response.data.prev_page_url);
+            // vuexContext.commit('SET_NEXT_PAGE_URL', response.data.next_page_url);
+            // vuexContext.commit('SET_PREV_PAGE_URL', response.data.prev_page_url);
             vuexContext.commit('SET_LINKS_PAGE_URL', response.data.links);
           })
           .catch((error) => {
@@ -128,6 +128,9 @@ export const actions = {
         })
           .then((response) => {
             vuexContext.commit('SET_CATEGORIES', response.data.data);
+            vuexContext.commit('SET_CURRENT_PAGES', response.data.current_page);
+            vuexContext.commit('SET_PREV_PAGE_URL', response.data.prev_page_url);
+            vuexContext.commit('SET_NEXT_PAGE_URL', response.data.next_page_url);
             console.log(response.data)
           })
           .catch((error) => {
@@ -144,6 +147,9 @@ export const actions = {
           headers: { Authorization: `Bearer ${accessToken}` },
         })
           .then((response) => {
+            vuexContext.commit('SET_CURRENT_PAGES', response.data.current_page);
+            vuexContext.commit('SET_PREV_PAGE_URL', response.data.prev_page_url);
+            vuexContext.commit('SET_NEXT_PAGE_URL', response.data.next_page_url);
             vuexContext.commit('SET_CATEGORIES', response.data.data);
           })
           .catch((error) => {
